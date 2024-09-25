@@ -1,13 +1,10 @@
 import pandas as pd  
 import numpy as np  
 import matplotlib.pyplot as plt  
-# 加载数据  
 data = pd.read_csv('boston_house_prices.csv')  
-# 选择特征和目标变量  
-X = data[['RM']].values  # 假设RM是平均房间数  
-y = data['MEDV'].values  # 假设MEDV是房屋中位价格  
+X = data[['RM']].values
+y = data['MEDV'].values
 X_b = np.c_[np.ones((X.shape[0], 1)), X] 
-# 梯度下降函数  
 def compute_cost(X, y, theta):  
     m = len(y)  
     predictions = X.dot(theta)  
@@ -24,18 +21,14 @@ def gradient_descent(X, y, theta, learning_rate=0.01, n_iterations=1000):
         cost = compute_cost(X, y, theta)  
         cost_history.append(cost)  
     return theta, cost_history  
-# 初始化theta  
 initial_theta = np.zeros(X_b.shape[1])  
-# 运行梯度下降  
 theta_final, costs = gradient_descent(X_b, y, initial_theta)  
-# 绘制成本下降图  
 plt.figure(figsize=(10, 5))  
 plt.subplot(1, 2, 1)  
 plt.plot(costs)  
 plt.xlabel('Iterations')  
 plt.ylabel('Cost')  
 plt.title('Cost over Iterations')  
-# 绘制线性回归线  
 plt.subplot(1, 2, 2)  
 X_range = np.array([X_b[:, 1].min(), X_b[:, 1].max()]).reshape(-1, 1)  
 X_b_range = np.c_[np.ones((X_range.shape[0], 1)), X_range]  
